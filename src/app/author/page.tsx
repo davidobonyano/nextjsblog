@@ -1,16 +1,31 @@
-import Link from "next/link";
 
-export default function AuthorPage() {
+type Product = {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+};
+
+async function getProducts(): Promise<Product[]> {
+  const res = await fetch("https://fakestoreapi.com/products");
+  return res.json();
+}
+
+export default async function ProductsPage() {
+  const products = await getProducts();
+
   return (
-    <div>
-      <h1>Author Page</h1>
-      <p>This is the author page.</p>
-      <ul>
-        <li><Link href="/author/1">Product 1</Link></li>
-        <li><Link href="/author/2">Product 2</Link></li>
-        <li><Link href="/author/3">Product 3</Link></li>
-        <li><Link href="/author/4">Product 4</Link></li>
-        <li><Link href="/author/5">Product 5</Link></li>
+    <div className="p-4">
+      <h1 className="text-xl font-bold mb-4">All Products</h1>
+      <ul className="grid grid-cols-2 gap-4">
+        {products.map((product: Product) => (
+          <li key={product.id} className="border p-2 rounded">
+            <h2 className="font-semibold">{product.title}</h2>
+            <p className="text-sm text-gray-600">${product.price}</p>
+          </li>
+        ))}
       </ul>
     </div>
   );
