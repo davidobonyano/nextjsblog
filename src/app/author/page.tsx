@@ -9,9 +9,24 @@ type Product = {
 };
 
 async function getProducts(): Promise<Product[]> {
-  const res = await fetch("https://fakestoreapi.com/products");
-  return res.json();
+  try {
+    const res = await fetch("https://fakestoreapi.com/products");
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch products");
+    }
+
+    return await res.json();
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Fetch error:", error.message);
+      throw new Error(error.message || "Something went wrong");
+    }
+    throw new Error("An unknown error occurred");
+  }
 }
+
+
 
 export default async function ProductsPage() {
   const products = await getProducts();
