@@ -10,6 +10,7 @@ export default function Navbar(){
                 <Link href="/" className="hover:underline">Home</Link>
                 <Link href="/author" className="hover:underline">Author</Link>
                 <Link href="/blog" className="hover:underline">Blog</Link>
+                <Link href="/article">article</Link>
             </nav>
         </div>
     )
